@@ -1,13 +1,13 @@
 #include "format.h"
 
-const char* datetimeToString(struct tm datetime, char format[]) {
+const char* datetime_to_string(struct tm datetime, char format[]) {
 	static char buffer[26];
 	strftime(buffer, sizeof(buffer), format, &datetime);
 	return buffer;
 }
 
-const char* dateNowToString(){
+const char* datenow_to_string(){
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    return datetimeToString(tm, "%d-%m-%Y");
+    return datetime_to_string(tm, "%d-%m-%Y");
 }

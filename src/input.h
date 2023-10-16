@@ -8,8 +8,8 @@
 
 void clear();
 
-int inputDaysToAdd();
+int input_days_to_add();
 
-int inputFromList(char *text, int list[], int size);
+int input_from_list(char *text, int list[], int size);
 
-void inputTime(char* text, int *hour, int *minute, int *second);
+void input_time(char* text, int *hour, int *minute, int *second);

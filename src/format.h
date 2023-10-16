@@ -2,6 +2,6 @@
 #include <stdio.h>
 #include <time.h>
 
-const char* datetimeToString(struct tm datetime, char format[]);
+const char* datetime_to_string(struct tm datetime, char format[]);
 
-const char* dateNowToString();
+const char* datenow_to_string();
