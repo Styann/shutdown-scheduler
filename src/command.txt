@@ -1,5 +1,2 @@
-gcc -c format.c -o format.o
-gcc -c input.c -o input.o
-gcc -c main.c -o main.o
-gcc main.o format.o input.o -o main
+gcc main.c input.c format.c -o main.exe
 ./main

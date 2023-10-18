@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <Windows.h>
 
 #include "input.h"
@@ -34,23 +35,38 @@ struct tm* create_timeout(int day, int hour, int minute, int second, int isTimeo
     return datetime;
 }
 
-void start_timeout(time_t target){
-    int s = 0;
-    while(time(NULL) <= target){
-        Sleep(1000);
-        s++;
-        printf("\n%d", s);
+void appendLog(char *msg){
+    FILE *log = fopen("shutdown.log", "a");
+    if(log != NULL){
+        time_t t = time(NULL);
+        struct tm instant = *localtime(&t);
+        fprintf(log, "%s %s\n", msg, datetime_to_string(instant, "%c"));
     }
+    fclose(log);
+}
 
-    if(time(NULL) >= target) shutdown_by_os();
+void start_timeout(time_t *target){
+
+    int diff = (int)difftime( *target, time(NULL)) * 1000;
+    appendLog("started at");
+    if(diff > 0) Sleep(diff); 
+    appendLog("done at");
+    if(time(NULL) >= *target) shutdown_by_os();
+    /*
+    time_t t;
+    struct tm instant;
+    do{
+        t = time(NULL);
+        instant = *localtime(&t);
+        printf("%s\n", datetime_to_string(instant, "%c"));
+    }while(t <= *target);
+
+    if(time(NULL) >= *target) shutdown_by_os();*/
 }
 
 int main(){
-    struct tm* dt = NULL;
-
     int day;
     day = input_days_to_add();
-
 
     char *text = "Specify a time or a timeout (1, 2) : ";
     int j;
@@ -61,10 +77,10 @@ int main(){
     input_time("Type a time (format hh:mm:ss) : ", &hour, &minute, &second);
     printf("\n%d:%d:%d\n", hour, minute, second);
 
-    dt = create_timeout(day, hour, minute, second, choice-1);
-
+    struct tm* dt = create_timeout(day, hour, minute, second, choice-1);
+    time_t t = mktime(dt);
     if(dt != NULL){
-        start_timeout(mktime(dt));
+        start_timeout(&t);
     }
 
     return 0;
