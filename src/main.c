@@ -10,9 +10,9 @@
 #include "input.h"
 #include "format.h"
 
-struct tm* create_timeout(int day, int hour, int minute, int second, int isTimeout){
+struct tm *create_timeout(int day, int hour, int minute, int second, int isTimeout){
     time_t timenow = time(NULL);
-    struct tm* datetime = localtime(&timenow);
+    struct tm *datetime = localtime(&timenow);
 
     datetime->tm_mday += day;
     if(isTimeout == 1){
@@ -30,20 +30,18 @@ struct tm* create_timeout(int day, int hour, int minute, int second, int isTimeo
 
 void start_timeout(time_t *target){
 
-    int diff = (int)difftime( *target, time(NULL)) * 1000;
-
-
-
-    
     time_t now = time(NULL);
     struct tm dt_start = *localtime(&now);
-    struct tm dt_end = *localtime(target);
-
     char *str_dt_start = datetime_to_str(dt_start, "%c");
+
+    struct tm dt_end = *localtime(target);
     char *str_dt_end = datetime_to_str(dt_end, "%c");
+
     printf("schedule start at %s, will end at %s", str_dt_start, str_dt_end);
     free(str_dt_start);
     free(str_dt_end);
+
+    int diff = (int)difftime( *target, time(NULL)) * 1000;
 
     if(diff > 0){
         #if defined _WIN32 || defined _WIN64
@@ -79,7 +77,7 @@ int main(){
     int hour, minute, second;
     input_time("Type a time (format hh:mm:ss) : ", &hour, &minute, &second);
 
-    struct tm* dt = create_timeout(day, hour, minute, second, choice-1);
+    struct tm *dt = create_timeout(day, hour, minute, second, choice-1);
     time_t t = mktime(dt);
     if(dt != NULL){
         start_timeout(&t);
