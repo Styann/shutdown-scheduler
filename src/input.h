@@ -1,12 +1,11 @@
 #pragma once
 #include <stdio.h>
+#include "format.h"
 /*#include <ctype.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>*/
-
-void clear();
 
 int input_days_to_add();
 

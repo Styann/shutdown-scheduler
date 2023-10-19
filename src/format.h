@@ -1,7 +1,8 @@
 #pragma once
 #include <stdio.h>
 #include <time.h>
+#include <stdlib.h>
 
-const char* datetime_to_string(struct tm datetime, char format[]);
+char *datetime_to_str(struct tm datetime, char format[]);
 
-const char* datenow_to_string();
+char *datenow_to_str();
