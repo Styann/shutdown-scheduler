@@ -8,6 +8,6 @@ char *datetime_to_str(struct tm datetime, char format[]) {
 
 char *datenow_to_str(){
     time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-    return datetime_to_str(tm, "%d-%m-%Y");
+    struct tm datetime = *localtime(&t);
+    return datetime_to_str(datetime, "%d-%m-%Y");
 }

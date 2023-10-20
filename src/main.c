@@ -67,14 +67,12 @@ void start_timeout(time_t *target){
 }
 
 int main(){
-    int day;
-    day = input_days_to_add();
+    int day = input_days_to_add(), hour, minute, second;
 
     char *text = "Specify a time or a timeout (1, 2) : ";
-    int choices[] = {1, 2};
+    int choices[2] = {1, 2};
     int choice = input_from_list(text, choices, sizeof(choices));
 
-    int hour, minute, second;
     input_time("Type a time (format hh:mm:ss) : ", &hour, &minute, &second);
 
     struct tm *dt = create_timeout(day, hour, minute, second, choice-1);

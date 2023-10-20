@@ -1,16 +1,16 @@
 #include "input.h"
 
 int input_days_to_add() {
-	int input;	
+	int input;
     int is_ok = 0;
 
     while(!is_ok){
         char *dt_now = datenow_to_str();
         printf("Type a number between 0 and N (0 is today (%s)) : ", dt_now);
         free(dt_now);
-        scanf("%d", &input);     
+        scanf("%d", &input);
         fflush(stdin);
-        if(input>=0) is_ok = 1;    
+        if(input>=0) is_ok = 1;
     }
 	
 	return input;
@@ -44,7 +44,6 @@ void input_time(char* text, int *hour, int *minute, int *second){
         printf(text);
         scanf("%2d:%2d:%2d", hour, minute, second);
         fflush(stdin);
-        //printf("\n%d:%d:%d\n", hour, minute, second);
 
         if(*hour >= 0 && *hour < 24){
             if(*minute >= 0 && *minute < 60){
