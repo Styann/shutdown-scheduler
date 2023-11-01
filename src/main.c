@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
-#include <ctype.h>
 
 #if defined _WIN32 || _WIN64
 #include <Windows.h>
@@ -66,60 +65,13 @@ void start_timeout(time_t *target){
     return;
 }
 
-void color_digit(char *text){
-    char buffer[99] = "";
-    char *buffer_char;
-    char *color = "\x1B[32m";
 
-
-
-    int is_digit = 0; //bool
-    int previous_is_digit = 0; //bool
-
-    for(int i = 0; i<strlen(text); i++){
-        is_digit = isdigit(text[i]);
-
-        if(is_digit && !previous_is_digit){
-            sprintf(buffer_char, "%s%s", GREEN_CONSOLE_COLOR, text[i]);
-            printf("-->d&!pd %s\n", buffer_char);
-            //*buffer_char = text[i]; 
-            previous_is_digit = 1;  
-        }
-        else if(!is_digit){
-            //printf("-->!d %c\n", text[i]);
-            *buffer_char = text[i]; 
-            previous_is_digit = 0;
-        }
-        else{
-            *buffer_char = text[i]; 
-            //printf("--> %c\n", text[i]);
-        }
-
-        strcat(buffer, buffer_char);
-    }
-
-    printf("\n result -> %s\n", buffer);
-
-}
 
 int main(){
-    /*printf("\n");
-    printf("\x1B[31mTexting\033[0m\t\t");
-    printf("\x1B[32mTexting\033[0m\t\t"); //green
-    printf("\x1B[33mTexting\033[0m\t\t");
-    printf("\x1B[34mTexting\033[0m\t\t");
-    printf("\x1B[35mTexting\033[0m\n"); // purple
-    
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[37mTexting\033[0m\t\t");
-    printf("\x1B[93mTexting\033[0m\n");
-    
-    printf("\t\t");
-    printf("\n");*/
 
-    color_digit("test12123test123test789");
+    char *test = color_digit("test12123test123test789", GREEN_CONSOLE_COLOR, 't');
+    printf("%s", test);
+    free(test);
 
     int day = input_days_to_add(), hour, minute, second;
 
