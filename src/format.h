@@ -18,10 +18,10 @@ printf("\x1B[93mTexting\033[0m\n");*/
 #define BLUE_CONSOLE_COLOR "\x1B[34m"
 #define PURPLE_CONSOLE_COLOR "\x1B[35m"
 
+void sprintc(char *text, const char *color, char opening, char ending);
+
+void printc(char *format, const char *color, char opening, char ending);
+
 char *datetime_to_str(struct tm datetime, char format[]);
 
-char *datenow_to_str();
-
-void printc(char *text, char *color);
-
-char *color_digit(char *text, char *color, char odd);
+char *datenow_to_str(char format[]);

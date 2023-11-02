@@ -1,8 +1,8 @@
 #include "format.h"
 
 char *datetime_to_str(struct tm datetime, char format[]) {
-    char *buffer = malloc(26);
-	strftime(buffer, 26, format, &datetime);
+    char *buffer = (char *)malloc(512);
+	strftime(buffer, 512, format, &datetime);
 	return buffer;
 }
 
@@ -12,51 +12,60 @@ char *datenow_to_str(char format[]){
     return datetime_to_str(datetime, format);
 }
 
-void printc(char *text, char *color){
-    printf("%s%s%s", color, text, WHITE_CONSOLE_COLOR);
-    return;
+void sprintc(char *text, const char *color, char opening, char ending){
+    char buffer[512] = "";
+
+    char buffer_char[2];
+    buffer_char[1] = '\0';
+
+    int is_printable = 0;
+    
+    for(int i = 0; i<strlen(text); i++){
+        buffer_char[0] = text[i];
+
+        is_printable = 1;
+
+        if(buffer_char[0] == opening){
+            strcat(buffer, color);
+            is_printable = 0;
+        }else if(buffer_char[0] == ending){
+            strcat(buffer, WHITE_CONSOLE_COLOR);
+            is_printable = 0;
+        }
+
+        if(is_printable){
+            strcat(buffer, buffer_char);
+        }
+    }
+    
+    strcpy(text, buffer);
 }
 
-char *color_digit(char *text, char* color, char odd){
-    char *buffer = malloc(99);
-    strcpy(buffer, "");
-    char *buffer_char;
+void printc(char *text, const char *color, char opening, char ending){
+    char buffer[512] = "";
 
-    int is_digit = 0; //bool
-    int previous_is_digit = 0; //bool
-    int is_color_open = 0; //bool
+    char buffer_char[2];
+    buffer_char[1] = '\0';
 
+    int is_printable = 0;
+    
     for(int i = 0; i<strlen(text); i++){
-        is_digit = isdigit(text[i]);
+        buffer_char[0] = text[i];
 
-        buffer_char = text[i];
-        printf("%s", buffer_char);
+        is_printable = 1;
 
-
-        /*if( (is_digit || text[i] == odd) && !previous_is_digit){
+        if(buffer_char[0] == opening){
             strcat(buffer, color);
-            *buffer_char = text[i];
-            strcat(buffer, buffer_char);
-            previous_is_digit = 1;
-            is_color_open = 1;
-
-        }
-        else if(!is_digit){
-            *buffer_char = text[i];
+            is_printable = 0;
+        }else if(buffer_char[0] == ending){
             strcat(buffer, WHITE_CONSOLE_COLOR);
-            strcat(buffer, buffer_char);
-            previous_is_digit = 0;
+            is_printable = 0;
         }
-        else{
-            *buffer_char = text[i];
+
+        if(is_printable){
             strcat(buffer, buffer_char);
-        }*/
+        }
     }
 
-    if(is_color_open){
-        strcat(buffer, WHITE_CONSOLE_COLOR);
-    }
-
-
-    return buffer;
+    printf("%s", buffer);
 }

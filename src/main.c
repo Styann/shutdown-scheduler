@@ -33,12 +33,16 @@ void start_timeout(time_t *target){
 
     time_t now = time(NULL);
     struct tm dt_start = *localtime(&now);
-    char *str_dt_start = datetime_to_str(dt_start, "%c");
+    char *str_dt_start = datetime_to_str(dt_start, "{%d}/{%m}/{%Y} {%H}:{%M}:{%S}");
 
     struct tm dt_end = *localtime(target);
-    char *str_dt_end = datetime_to_str(dt_end, "%c");
+    char *str_dt_end = datetime_to_str(dt_end, "{%d}/{%m}/{%Y} {%H}:{%M}:{%S}");
+    sprintc(str_dt_end, RED_CONSOLE_COLOR, '{', '}');
 
-    printf("schedule start at %s, will end at %s", str_dt_start, str_dt_end);
+    char message[512];
+    sprintf(message, "schedule start at %s, will end at %s", str_dt_start, str_dt_end);
+    printc(message, GREEN_CONSOLE_COLOR, '{', '}');
+    
     free(str_dt_start);
     free(str_dt_end);
 
@@ -47,7 +51,7 @@ void start_timeout(time_t *target){
     if(diff > 0){
         #if defined _WIN32 || defined _WIN64
             Sleep(diff);
-            system("C:/Windows/System32/shutdown.exe /s /t 0");
+            system("C:/Windows/System32/shutdown.exe /s");
         #elif defined __linux__
             sleep(diff);
             system("shutdown -P now");
@@ -65,21 +69,17 @@ void start_timeout(time_t *target){
     return;
 }
 
-
-
-int main(){
-
-    char *test = color_digit("test12123test123test789", GREEN_CONSOLE_COLOR, 't');
-    printf("%s", test);
-    free(test);
-
+int main(void){
     int day = input_days_to_add(), hour, minute, second;
 
-    char *text = "Specify a time or a timeout (1, 2) : ";
+    char text[64] = "Specify a time or a timeout ({1}, {2}) : ";
+    sprintc(text, GREEN_CONSOLE_COLOR, '{', '}');
     int choices[2] = {1, 2};
     int choice = input_from_list(text, choices, sizeof(choices));
 
-    input_time("Type a time (format hh:mm:ss) : ", &hour, &minute, &second);
+    char text2[64] = "Type a time (format {hh}:{mm}:{ss}) : ";
+    sprintc(text2, GREEN_CONSOLE_COLOR, '{', '}');
+    input_time(text2, &hour, &minute, &second);
 
     struct tm *dt = create_timeout(day, hour, minute, second, choice-1);
     time_t t = mktime(dt);
