@@ -29,7 +29,7 @@ void sprintc(char *text, const char *color, char opening, char ending){
             strcat(buffer, color);
             is_printable = 0;
         }else if(buffer_char[0] == ending){
-            strcat(buffer, WHITE_CONSOLE_COLOR);
+            strcat(buffer, ANSI_COLOR_RESET);
             is_printable = 0;
         }
 
@@ -58,7 +58,7 @@ void printc(char *text, const char *color, char opening, char ending){
             strcat(buffer, color);
             is_printable = 0;
         }else if(buffer_char[0] == ending){
-            strcat(buffer, WHITE_CONSOLE_COLOR);
+            strcat(buffer, ANSI_COLOR_RESET);
             is_printable = 0;
         }
 

@@ -7,15 +7,16 @@ int input_days_to_add(void) {
     while(!is_ok){
         char *dt_now = datenow_to_str("{%d}/{%m}/{%Y}");
         
-        char text[512];
-        sprintf(text, "Type a number between {0} and {N} ({0} is today (%s)) : ", dt_now);
-        printc(text, GREEN_CONSOLE_COLOR, '{', '}');
+        char message[512];
+        sprintf(message, "Type a number between {0} and {N} ({0} is today (%s)) : ", dt_now);
+        printc(message, ANSI_COLOR_GREEN, '{', '}');
 
         free(dt_now);
 
         scanf("%d", &input);
         fflush(stdin);
-        if(input>=0) is_ok = 1;
+
+        if(input >= 0) is_ok = 1;
     }
 
 	return input;

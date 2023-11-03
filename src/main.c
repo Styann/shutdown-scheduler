@@ -37,16 +37,16 @@ void start_timeout(time_t *target){
 
     struct tm dt_end = *localtime(target);
     char *str_dt_end = datetime_to_str(dt_end, "{%d}/{%m}/{%Y} {%H}:{%M}:{%S}");
-    sprintc(str_dt_end, RED_CONSOLE_COLOR, '{', '}');
+    sprintc(str_dt_end, ANSI_COLOR_RED, '{', '}');
 
     char message[512];
     sprintf(message, "schedule start at %s, will end at %s", str_dt_start, str_dt_end);
-    printc(message, GREEN_CONSOLE_COLOR, '{', '}');
+    printc(message, ANSI_COLOR_GREEN, '{', '}');
     
     free(str_dt_start);
     free(str_dt_end);
 
-    int diff = (int)difftime( *target, time(NULL)) * 1000;
+    int diff = (int)difftime(*target, time(NULL)) * 1000;
 
     if(diff > 0){
         #if defined _WIN32 || defined _WIN64
@@ -69,17 +69,18 @@ void start_timeout(time_t *target){
     return;
 }
 
-int main(void){
+int main(int argc, char const *argv[]){
+
     int day = input_days_to_add(), hour, minute, second;
 
-    char text[64] = "Specify a time or a timeout ({1}, {2}) : ";
-    sprintc(text, GREEN_CONSOLE_COLOR, '{', '}');
+    char message[64] = "Specify a time or a timeout ({1}, {2}) : ";
+    sprintc(message, ANSI_COLOR_GREEN, '{', '}');
     int choices[2] = {1, 2};
-    int choice = input_from_list(text, choices, sizeof(choices));
+    int choice = input_from_list(message, choices, sizeof(choices));
 
-    char text2[64] = "Type a time (format {hh}:{mm}:{ss}) : ";
-    sprintc(text2, GREEN_CONSOLE_COLOR, '{', '}');
-    input_time(text2, &hour, &minute, &second);
+    char message2[64] = "Type a time (format {hh}:{mm}:{ss}) : ";
+    sprintc(message2, ANSI_COLOR_GREEN, '{', '}');
+    input_time(message2, &hour, &minute, &second);
 
     struct tm *dt = create_timeout(day, hour, minute, second, choice-1);
     time_t t = mktime(dt);

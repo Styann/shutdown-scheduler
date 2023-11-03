@@ -11,12 +11,13 @@ printf("\x1B[36mTexting\033[0m\t\t");
 printf("\x1B[37mTexting\033[0m\t\t");
 printf("\x1B[93mTexting\033[0m\n");*/
 
-#define WHITE_CONSOLE_COLOR "\033[0m"
-#define RED_CONSOLE_COLOR "\x1B[31m"
-#define GREEN_CONSOLE_COLOR "\x1B[32m"
-#define YELLOW_CONSOLE_COLOR "\x1B[33m"
-#define BLUE_CONSOLE_COLOR "\x1B[34m"
-#define PURPLE_CONSOLE_COLOR "\x1B[35m"
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
 
 void sprintc(char *text, const char *color, char opening, char ending);
 
