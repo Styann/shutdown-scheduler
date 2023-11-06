@@ -37,7 +37,7 @@ void start_timeout(time_t *target){
 
     struct tm dt_end = *localtime(target);
     char *str_dt_end = datetime_to_str(dt_end, "{%d}/{%m}/{%Y} {%H}:{%M}:{%S}");
-    sprintc(str_dt_end, ANSI_COLOR_RED, '{', '}');
+    sprintc(str_dt_end, ANSI_COLOR_MAGENTA, '{', '}');
 
     char message[512];
     sprintf(message, "schedule start at %s, will end at %s", str_dt_start, str_dt_end);
@@ -70,7 +70,7 @@ void start_timeout(time_t *target){
 }
 
 int main(int argc, char const *argv[]){
-
+    
     int day = input_days_to_add(), hour, minute, second;
 
     char message[64] = "Specify a time or a timeout ({1}, {2}) : ";
@@ -84,6 +84,7 @@ int main(int argc, char const *argv[]){
 
     struct tm *dt = create_timeout(day, hour, minute, second, choice-1);
     time_t t = mktime(dt);
+    
     if(dt != NULL){
         start_timeout(&t);
     }

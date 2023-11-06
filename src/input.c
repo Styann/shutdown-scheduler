@@ -22,7 +22,6 @@ int input_days_to_add(void) {
 	return input;
 }
 
-
 int input_from_list(const char *message, int list[], int size){
     int input;
     int is_ok = 0;
