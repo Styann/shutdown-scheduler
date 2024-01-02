@@ -1,4 +1,7 @@
 #pragma once
+#ifndef FORMAT
+#define FORMAT
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -20,3 +23,5 @@ char *datenow_to_str(char format[]);
 void sprintc(char *text, const char *color, char opening, char ending);
 
 void printc(char *format, const char *color, char opening, char ending);
+
+#endif

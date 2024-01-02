@@ -1,2 +1,2 @@
-gcc main.c input.c format.c -o main.exe
-./main
+gcc main.c input.c format.c -o shutdown.exe
+./shutdown
