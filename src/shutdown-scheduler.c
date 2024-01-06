@@ -11,16 +11,19 @@
 #include "input.h"
 #include "format.h"
 
-struct tm *create_timeout(int day, int hour, int minute, int second, int isTimeout){
+#define TIMEOUT 1
+#define AT_HOUR 2 
+
+struct tm *create_timeout(int day, int hour, int minute, int second, int choice){
     time_t timenow = time(NULL);
     struct tm *datetime = localtime(&timenow);
 
     datetime->tm_mday += day;
-    if(isTimeout == 1){
+    if(choice == 1){
         datetime->tm_hour += hour;
         datetime->tm_min += minute;
         datetime->tm_sec += second;
-    }else if(isTimeout == 0){
+    }else if(choice == 2){
         datetime->tm_hour = hour;
         datetime->tm_min = minute;
         datetime->tm_sec = second;
@@ -70,23 +73,40 @@ void start_timeout(time_t *target){
 }
 
 int main(int argc, char const *argv[]){
-    
-    int day = input_days_to_add(), hour, minute, second;
+    printf("argc -> %d\n", argc);
 
-    char message[64] = "Specify a time or a timeout ({1}, {2}) : ";
-    sprintc(message, ANSI_COLOR_GREEN, '{', '}');
-    int choices[2] = {1, 2};
-    int choice = input_from_list(message, choices, sizeof(choices));
+    int choice = 0;
 
-    char message2[64] = "Type a time (format {hh}:{mm}:{ss}) : ";
-    sprintc(message2, ANSI_COLOR_GREEN, '{', '}');
-    input_time(message2, &hour, &minute, &second);
+    if(argc >= 4){
+        //to or hour
+        if(strcmp(argv[1], "-to") == 0) choice = TIMEOUT;
+        else if(strcmp(argv[1], "-h") == 0) choice = AT_HOUR;
+        
+        //day to add
+        int days;
+        if(!str_to_int(&days, argv[2])){
+            return 1;
+        }
 
-    struct tm *dt = create_timeout(day, hour, minute, second, choice-1);
-    time_t t = mktime(dt);
-    
-    if(dt != NULL){
-        start_timeout(&t);
+        //hours
+        int hour, minute, second;
+        if(!convert_timestr_to_int(argv[3], &hour, &minute, &second)){
+            printf("tg1\n");
+            return 1;
+        }
+
+        printf("d:%d h:%d m:%d s:%d\n", days, hour, minute, second);
+        if(!parse_time(&hour, &minute, &second)){
+            printf("tg2\n");
+            return 1;
+        }
+
+        struct tm *dt = create_timeout(days, hour, minute, second, choice);
+        time_t t = mktime(dt);
+        
+        if(dt != NULL){
+            start_timeout(&t);
+        }
     }
 
     return 0;

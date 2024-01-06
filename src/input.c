@@ -63,3 +63,35 @@ void input_time(const char* message, int *hour, int *minute, int *second){
 
     return;
 }
+
+bool str_to_int(int *dest, char const *str){
+    if(isdigit(*str) != 0){
+        *dest = atoi(str);
+        return true;
+    }
+    return false;
+}
+
+bool convert_timestr_to_int(char const *str, int *hour, int *minute, int *second){
+    char *token = strtok((char*)str, ":");
+    if(!str_to_int(hour, token)) return false;
+    
+    token = strtok(NULL, ":");
+    if(!str_to_int(minute, token)) return false;
+  
+    token = strtok(NULL, ":");
+    if(!str_to_int(second, token)) return false;
+    
+    return true;
+}
+
+bool parse_time(int *hour, int *minute, int *second){
+    if(*hour >= 0 && *hour < 24){
+        if(*minute >= 0 && *minute < 60){
+            if(*second >= 0 && *second < 60){
+                return true;
+            }
+        }
+    }
+    return false;
+}
