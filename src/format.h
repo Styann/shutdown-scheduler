@@ -24,4 +24,8 @@ void sprintc(char *text, const char *color, char opening, char ending);
 
 void printc(char *format, const char *color, char opening, char ending);
 
+void color_fullstring(char *text, const char *color);
+
+int print_error(const char *message);
+
 #endif

@@ -69,3 +69,19 @@ void printc(char *text, const char *color, char opening, char ending){
 
     printf("%s", buffer);
 }
+
+void color_fullstring(char *str, const char *color){
+    char buffer[512] = ANSI_COLOR_RED;
+    strcat(buffer, str);
+    strcat(buffer, ANSI_COLOR_RESET);
+    strcpy(str, buffer);
+    return;
+}
+
+int print_error(const char *message){
+    char buffer[512];
+    strcpy(buffer, message);
+    color_fullstring(buffer, ANSI_COLOR_RED);
+    fprintf(stderr, buffer);
+    return 1;
+}

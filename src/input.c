@@ -74,13 +74,13 @@ bool str_to_int(int *dest, char const *str){
 
 bool convert_timestr_to_int(char const *str, int *hour, int *minute, int *second){
     char *token = strtok((char*)str, ":");
-    if(!str_to_int(hour, token)) return false;
+    if(token == NULL || !str_to_int(hour, token)) return false;
     
     token = strtok(NULL, ":");
-    if(!str_to_int(minute, token)) return false;
+    if(token == NULL || !str_to_int(minute, token)) return false;
   
     token = strtok(NULL, ":");
-    if(!str_to_int(second, token)) return false;
+    if(token == NULL || !str_to_int(second, token)) return false;
     
     return true;
 }

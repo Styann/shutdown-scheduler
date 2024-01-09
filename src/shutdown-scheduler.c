@@ -73,8 +73,6 @@ void start_timeout(time_t *target){
 }
 
 int main(int argc, char const *argv[]){
-    printf("argc -> %d\n", argc);
-
     int choice = 0;
 
     if(argc >= 4){
@@ -85,20 +83,17 @@ int main(int argc, char const *argv[]){
         //day to add
         int days;
         if(!str_to_int(&days, argv[2])){
-            return 1;
+            return print_error("Error: days is not a number.");
         }
 
         //hours
         int hour, minute, second;
         if(!convert_timestr_to_int(argv[3], &hour, &minute, &second)){
-            printf("tg1\n");
-            return 1;
+            return print_error("Error: input hour wrong format.");
         }
 
-        printf("d:%d h:%d m:%d s:%d\n", days, hour, minute, second);
         if(!parse_time(&hour, &minute, &second)){
-            printf("tg2\n");
-            return 1;
+            return print_error("Error: input hour wrong format.");
         }
 
         struct tm *dt = create_timeout(days, hour, minute, second, choice);
@@ -108,6 +103,11 @@ int main(int argc, char const *argv[]){
             start_timeout(&t);
         }
     }
+    else{
+        return print_error("ArgumentError: not enough argument(s) were provided."); 
+    }
+
+
 
     return 0;
 }
